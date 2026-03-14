@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Mum</title>
+
+<!-- Elegant readable fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    background: #f5e6d3;
+    font-family: "Cormorant Garamond", serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ---------------- ENVELOPE ---------------- */
+  #envelope {
+    width: 420px;
+    height: 280px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.6s ease;
+  }
+
+  #env-body {
+    width: 100%;
+    height: 100%;
+    background: #fff8e7;
+    border: 3px solid #b89b72;
+    box-shadow: 0 0 20px rgba(0,0,0,0.25);
+    position: absolute;
+    z-index: 1;
+  }
+
+  #env-flap {
+    width: 100%;
+    height: 100%;
+    background: #f2e3c6;
+    border: 3px solid #b89b72;
+    border-bottom: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    clip-path: polygon(0 0, 100% 0, 50% 55%);
+    z-index: 2;
+    transition: transform 0.7s ease;
+    transform-origin: top;
+  }
+
+  #seal {
+    width: 90px;
+    height: 90px;
+    background: #c0392b;
+    border-radius: 50%;
+    position: absolute;
+    top: 95px;
+    left: 165px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.3);
+    z-index: 3;
+    transition: transform 0.3s ease;
+  }
+
+  #seal:hover {
+    transform: scale(1.1);
+  }
+
+  /* ---------------- MESSAGE LIST ---------------- */
+  #messages {
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+    padding: 20px;
+    animation: fadeIn 0.8s ease forwards;
+  }
+
+  .msg {
+    background: white;
+    padding: 14px;
+    border-radius: 8px;
+    border: 2px solid #d4c4a8;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 20px;
+  }
+
+  .msg:hover {
+    background: #fff3d6;
+  }
+
+  .gold {
+    border: 2px solid gold;
+    color: goldenrod;
+    font-weight: bold;
+    animation: glow 1.5s infinite alternate;
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 6px gold; }
+    to   { box-shadow: 0 0 22px gold; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------------- FINAL GOLD SCREEN ---------------- */
+  #final {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 20vh;
+    animation: fadeIn 1s ease forwards;
+    overflow: hidden;
+
+    background: radial-gradient(circle at 30% 30%, #fff7c7, #d4a017 40%, #8a6b1f 80%);
+  }
+
+  #final::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml;utf8,\
+      <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">\
+        <path d="M0 200 Q100 100 200 200 T400 200" stroke="rgba(255,255,255,0.25)" stroke-width="6" fill="none"/>\
+        <path d="M0 250 Q100 150 200 250 T400 250" stroke="rgba(255,255,255,0.15)" stroke-width="4" fill="none"/>\
+        <path d="M0 150 Q100 50 200 150 T400 150" stroke="rgba(255,255,255,0.15)" stroke-width="4" fill="none"/>\
+      </svg>'
+    );
+    background-size: 600px 600px;
+    animation: loop 12s linear infinite;
+    opacity: 0.45;
+  }
+
+  @keyframes loop {
+    from { transform: translate(0,0) rotate(0deg); }
+    to   { transform: translate(-200px,-200px) rotate(360deg); }
+  }
+
+  #final span {
+    position: relative;
+    z-index: 2;
+    font-family: 'Great Vibes', cursive;
+    font-size: 90px;
+    letter-spacing: 2px;
+    text-shadow:
+      0 0 12px rgba(0,0,0,0.6),
+      0 0 25px rgba(255,215,0,0.8);
+  }
+</style>
+</head>
+
+<body>
+
+<div id="envelope">
+  <div id="env-body"></div>
+  <div id="env-flap"></div>
+  <div id="seal">Click Here</div>
+</div>
+
+<div id="messages">
+  <div class="msg">You make hard days easier (sometimes).</div>
+  <div class="msg">Thank you for your endless love.</div>
+  <div class="msg">Thanks for always working so hard for us.</div>
+  <div class="msg">You still look 40 so don't worry.</div>
+  <div class="msg gold" id="special">Continue here.</div>
+</div>
+
+<div id="final">
+  <span>🎉 Happy Birthday Mum!! 🎉<br>💛💛💛</span>
+</div>
+
+<script>
+  const envelope = document.getElementById("envelope");
+  const flap = document.getElementById("env-flap");
+  const seal = document.getElementById("seal");
+  const messages = document.getElementById("messages");
+  const finalScreen = document.getElementById("final");
+  const special = document.getElementById("special");
+
+  seal.addEventListener("click", () => {
+    seal.style.transform = "scale(0)";
+    flap.style.transform = "rotateX(-160deg)";
+    setTimeout(() => {
+      envelope.style.transform = "scale(0.7) translateY(-200px)";
+    }, 300);
+    setTimeout(() => {
+      envelope.style.display = "none";
+      messages.style.display = "flex";
+    }, 900);
+  });
+
+  special.addEventListener("click", () => {
+    messages.style.display = "none";
+    finalScreen.style.display = "block";
+  });
+</script>
+
+</body>
+</html>
